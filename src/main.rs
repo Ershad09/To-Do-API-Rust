@@ -6,6 +6,9 @@ use config::settings::Settings;
 mod database;
 use database::db::create_db_pool;
 
+mod models;
+
+
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
