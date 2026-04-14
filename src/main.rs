@@ -8,6 +8,12 @@ use database::db::create_db_pool;
 
 mod models;
 
+mod repositories;
+
+mod errors;
+
+mod handlers;
+mod routes;
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +25,6 @@ async fn main() {
     let pool = create_db_pool(&settings.database_url, settings.db_max_connections).await;
 
     tracing::info!("Database connected!");
-
 
     let app = app::create_app(pool);
     tracing::info!("App created!");
