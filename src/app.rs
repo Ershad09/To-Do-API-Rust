@@ -1,13 +1,9 @@
-use axum::{response::Html, routing::get, Router};
+use axum::Router;
 
 use sqlx::PgPool;
 
+use crate::routes::todo_routes::todo_routes;
+
 pub fn create_app(pool: PgPool) -> Router {
-    Router::new()
-      
-         .route("/", get(test))
-        .with_state(pool)  
-}
-async fn test() -> Html<&'static str> {
-    Html("<h1>Hello, World!</h1>")
+    Router::new().merge(todo_routes(pool))
 }
