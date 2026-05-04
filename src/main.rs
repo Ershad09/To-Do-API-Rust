@@ -15,6 +15,9 @@ mod errors;
 mod handlers;
 mod routes;
 
+mod services;
+
+
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
