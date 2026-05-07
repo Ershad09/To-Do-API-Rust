@@ -28,7 +28,24 @@ pub async fn get_todo_by_id(pool: &PgPool, id: i32) -> Result<Todo, sqlx::Error>
 }
 
 
+pub async fn update_todo(pool: &PgPool, id: i32, title: &str) -> Result<Todo, sqlx::Error>{
+        let todo = sqlx::query_as::<_, Todo>(
+             "UPDATE todos SET title = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *"
+        )
+        .bind(title)
+        .bind(id)
+        .fetch_one(pool)
+        .await?;
+
+    Ok(todo)
+}
 
 
+pub async fn delete_todo(pool: &PgPool, id: i32) -> Result<(), sqlx::Error> {
+    sqlx::query("DELETE FROM todos WHERE id = $1")
+        .bind(id)
+        .execute(pool)
+        .await?;
 
-
+    Ok(())
+}
